@@ -1,0 +1,21 @@
+import java.io.*;
+
+public class WooHooС {
+    public static void main(String[] args) throws Exception {
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+
+        int n = Integer.valueOf(r.readLine());
+        if (n < 1) return;
+        int m = Integer.valueOf(r.readLine());
+        System.out.println(m);
+        int l = m;
+
+        for (int i = 1; i < n; ++i) {
+            m = Integer.valueOf(r.readLine());
+            if (m != l) {
+                System.out.println(m);
+                l = m;
+            }
+        }
+    }
+}
