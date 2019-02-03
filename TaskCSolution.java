@@ -28,22 +28,39 @@ Oracle Java 8
 
 import java.io.*;
 
-public class WooHooС {
+public class WooHoo {
     public static void main(String[] args) throws Exception {
-        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+        FileInputStream r  = new FileInputStream("input.txt");
 
-        int n = Integer.valueOf(r.readLine());
+        int n = Integer.valueOf(readLine(r));
         if (n < 1) return;
-        int m = Integer.valueOf(r.readLine());
+        int m = Integer.valueOf(readLine(r));
         System.out.println(m);
         int l = m;
 
         for (int i = 1; i < n; ++i) {
-            m = Integer.valueOf(r.readLine());
+            m = Integer.valueOf(readLine(r));
             if (m != l) {
                 System.out.println(m);
                 l = m;
             }
         }
+    }
+
+    public static String readLine(InputStream inputStream) throws IOException {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int r;
+
+        for (r = inputStream.read(); r != '\n' && r != -1 ; r = inputStream.read()) {
+            baos.write(r);
+        }
+
+        if (r == -1 && baos.size() == 0) {
+            return "";
+        }
+
+        String lines = baos.toString("UTF-8");
+        return lines;
     }
 }
