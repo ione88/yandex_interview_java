@@ -26,29 +26,66 @@ Oracle Java 8
 
 import java.io.*;
 
-public class TaskCSolution {
+public class WooHooC {
     private static final String FILE_INPUT = "input.txt";
     private static final String FILE_OUTPUT = "output.txt";
+    private static BufferedReader bufferedReader = null;
+    private static BufferedWriter bufferedWriter = null;
+    private static int MAX_CHAR_ARRAY_SIZE = 15;
     public static void main(String[] args) throws Exception {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(FILE_INPUT));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_OUTPUT));
+        init();
+        run();
+        close();
+    }
 
-        int n = Integer.valueOf(bufferedReader.readLine());
-        if (n < 1) return;
-        int m = Integer.valueOf(bufferedReader.readLine());
-        bufferedWriter.write(String.valueOf(m));
-        bufferedWriter.newLine();
-        int l = m;
-        for (int i = 1; i < n; ++i) {
-            m = Integer.valueOf(bufferedReader.readLine());
-            if (m != l) {
-                bufferedWriter.write(String.valueOf(m));
-                bufferedWriter.newLine();
-                l = m;
-            }
-            if (i%33334==33333)  Runtime.getRuntime().gc();
+    private static void init() throws IOException {
+        bufferedReader = new BufferedReader(new FileReader(FILE_INPUT));
+        bufferedWriter = new BufferedWriter(new FileWriter(FILE_OUTPUT));
+    }
 
+    private static void run() throws IOException {
+        int n = Integer.valueOf(String.valueOf(readLine()).trim());
+        if (n<1) return;
+
+        char[] m = writeLine(readLine());
+        char[] l = m;
+        int i = 1;
+
+        while (i<n){
+            m = readLine();
+            if (!equals(m,l)) l = writeLine(m);
+            ++i;
         }
+    }
+
+    private static void close() throws IOException {
         bufferedWriter.close();
+        bufferedReader.close();
+    }
+
+    private static char[] readLine() throws IOException {
+        char[] res = new char[MAX_CHAR_ARRAY_SIZE];
+        int count = 0;
+        while (true) {
+            int b = bufferedReader.read();
+            if (b == '\n' || b == -1) break;
+            if (b == '\r') continue;
+            res[count] = (char) b;
+            count++;
+        }
+        return res;
+    }
+    private static char[] writeLine(char[] IntToFile) throws IOException {
+        bufferedWriter.write(IntToFile);
+        bufferedWriter.newLine();
+        return IntToFile;
+    }
+
+    private static boolean equals(char[] chars1, char[] chars2) throws IOException {
+        for (int i = 0; i < MAX_CHAR_ARRAY_SIZE; ++i){
+            if (chars1[i] != chars2[i])
+                return false;
+        }
+        return true;
     }
 }
