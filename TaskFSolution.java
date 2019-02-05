@@ -34,16 +34,11 @@ Kotlin	1 секунда	20Mb
 
 */import java.io.*;
 
-public class WooHooF {
+public class TaskFSolution {
     private static final String FILE_INPUT = "input.txt";
     private static final String FILE_OUTPUT = "output.txt";
     private static BufferedReader bufferedReader = null;
     private static BufferedWriter bufferedWriter = null;
-    private static final int MAX_CHAR_ARRAY_SIZE = 5;
-    private static char[] chars = new char[MAX_CHAR_ARRAY_SIZE];
-    private static char[] chars1 = new char[1];
-    private static char[] chars2 = new char[2];
-    private static char[] chars3 = {'1', '0', '0'};
     public static void main(String[] args) throws Exception {
         init();
         run();
@@ -55,51 +50,65 @@ public class WooHooF {
         bufferedReader = new BufferedReader(new FileReader(FILE_INPUT));
         bufferedWriter = new BufferedWriter(new FileWriter(FILE_OUTPUT));
     }
-
-    private static void run() throws IOException {
-        long[] sort = new long[101];
-        int k, ki, i, j;
-        k = charsToInt(nextChars());
-        for (i = 0; i < k; ++i){
-            ki = charsToInt(nextChars());
-            for(j = 0; j < ki; ++j){
-                ++sort[charsToInt(nextChars())];
-            }
-        }
-        for(i = 0; i <= 100; ++i){
-            for (j = 0; j < sort[i]; ++j){
-                writeChars(charsFromInt(i));
-            }
-        }
-    }
-
+    
     private static void close() throws IOException {
         bufferedWriter.close();
         bufferedReader.close();
     }
 
-    private static char[] nextChars() throws IOException {
-        for (int i = 0; i < 5; ++i) {
-            chars[i] = 'x';
+    private static void run() throws IOException {
+        int k, ki, i, j;
+        
+        nextChars();
+        k = charsToInt();
+        for (i = 0; i < k; ++i){
+            nextChars();
+            ki = charsToInt();
+            for(j = 0; j < ki; ++j){
+                nextChars();
+                ++sort[charsToInt()];
+            }
         }
-        int b, count = 0;
-        while (true) {
+        for(i = 0; i <= 100; ++i) {
+            charsFromInt(i);
+            for (j = 0; j < sort[i]; ++j)
+                writeChars();
+        }
+    }
+    
+    private static final int MAX_CHAR_ARRAY_SIZE = 5;
+    private static final int MAX_NUMBER = 101;
+    
+    private static int[] sort = new int[MAX_NUMBER];
+    private static char[] chars = new char[MAX_CHAR_ARRAY_SIZE];
+    
+    private static void nextChars() throws IOException {
+        int b = 0;
+        count = MAX_CHAR_ARRAY_SIZE;
+        while (b != '\n' && b != -1 && b != ' ') {
             b = bufferedReader.read();
-            if (b == '\n' || b == -1 || b == ' ') break;
-            if (b < '0' || b > '9') continue;
-            chars[count] = (char) b;
-            count++;
+            if (chars[i] >= '0' && chars[i] <= '9')
+                chars[--count] = (char) b;
         }
-        return chars;
+        for (int i = 0; i < count; ++i) {
+            chars[i] = '0';
+        }
     }
 
-    private static char[] writeChars(char[] IntToFile) throws IOException {
-        bufferedWriter.write(IntToFile);
+    private static void writeChars() throws IOException {
+        int count = 0;
+        for (; count < MAX_CHAR_ARRAY_SIZE-1; ++count) {
+            if (chars[i] != '0') break;
+        }
+        
+        for (; count < MAX_CHAR_ARRAY_SIZE; ++count) {
+            bufferedWriter.write(chars[count]);
+        }
+        
         bufferedWriter.write(' ');
-        return IntToFile;
     }
 
-    private static int charsToInt(char[] chars) {
+    private static int charsToInt() {
         int i, number = 0;
 
         for(i = 0; i < chars.length; i++)
@@ -109,19 +118,11 @@ public class WooHooF {
         return number;
     }
 
-    private static char[] charsFromInt(int number) {
-        if (number < 10) {
-            chars1[0] = (char) (number + '0');
-            return chars1;
+    private static void charsFromInt(int number) {
+        int count = MAX_CHAR_ARRAY_SIZE-1;
+        for (; count >= 0; --count) {
+            chars[i] = (char) ((number%10) + '0');
         }
-
-        if (number < 100) {
-            chars2[0] = (char) ((number/10) + '0');
-            chars2[1] =  (char) ((number%10) + '0');
-            return chars2;
-        }
-
-        return chars3;
     }
 
 }
