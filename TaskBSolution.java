@@ -23,7 +23,6 @@
 1
 1
 */
-
 import java.io.*;
 
 public class TaskBSolution {
@@ -47,6 +46,15 @@ public class TaskBSolution {
         bufferedReader.close();
     }
 
+    private static int readLine() throws IOException {
+        return Integer.valueOf(bufferedReader.readLine());
+    }
+
+    private static void writeLine(int IntToFile) throws IOException {
+        bufferedWriter.write(String.valueOf(IntToFile));
+        bufferedWriter.newLine();
+    }
+
     private static void run() throws IOException {
         int n,m, local, result;
         n = readLine();
@@ -65,12 +73,5 @@ public class TaskBSolution {
         writeLine(result);
     }
 
-    private static int readLine() throws IOException {
-        return Integer.valueOf(bufferedReader.readLine());
-    }
 
-    private static void writeLine(int IntToFile) throws IOException {
-        bufferedWriter.write(IntToFile);
-        bufferedWriter.newLine();
-    }
 }
