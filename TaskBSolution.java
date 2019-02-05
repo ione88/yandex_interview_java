@@ -26,7 +26,7 @@
 
 import java.io.*;
 
-public class WooHooB {
+public class TaskBSolution {
     private static final String FILE_INPUT = "input.txt";
     private static final String FILE_OUTPUT = "output.txt";
     private static BufferedReader bufferedReader = null;
